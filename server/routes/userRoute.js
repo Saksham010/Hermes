@@ -1,5 +1,7 @@
 const express = require("express");
 const {registerUser,loginUser,resetPassword} = require("../controllers/userController");
+const {registerValidator,loginValidator} = require("../helpers/registerValidator");
+
 
 const router = express();
 
@@ -7,8 +9,8 @@ const router = express();
 router.use(express.json());
 
 //API
-router.post('/register',registerUser);
-router.post('/login',loginUser);
+router.post('/register',registerValidator,registerUser);
+router.post('/login',loginValidator,loginUser);
 router.post('/forgot-password',resetPassword);
 
 module.exports = router;

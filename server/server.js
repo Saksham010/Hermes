@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const userRoute = require("./routes/userRoute");
+const mailVerificationRoute = require('./routes/mailVerificationRoute');
 const mongoose = require("mongoose");
 
 // Connect to mongodb database
@@ -14,6 +15,7 @@ app.set('views','./views');
 
 //Auth route
 app.use('/auth',userRoute);
+app.use('/verify',mailVerificationRoute);
 
 app.listen(PORT,()=>{
     console.log(`Server started on port: ${PORT}`);
