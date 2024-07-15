@@ -1,7 +1,33 @@
 import {hermesLoginImage} from "../../utils/images.ts";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { SERVER_BASEURL } from "../../utils/constant.ts";
 
 export default function Login(){
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+
+    const submitForm = async ()=>{
+        try{
+            if(email == '' || password == ''){
+                return alert("Fields cannot be empty");
+            }else{
+                console.log("Server url: ",SERVER_BASEURL);
+
+                const res = await axios.post(SERVER_BASEURL + '/auth/login' ,{
+                    email,
+                    password
+                },{
+                    withCredentials:true
+                });
+                console.log("Response: ",res);
+            }
+
+        }catch(err){
+            console.log("Error: ",err);
+        }
+    }
 
     return(
         <>
@@ -16,20 +42,20 @@ export default function Login(){
                         <div>
                             <h1 className="font-cinzel text-xl font-medium">EMAIL</h1>
                             <div>
-                                <input placeholder="Place your email" type="email" className="border-2 w-full p-2 border-black focus:outline-none text-sm font-cinzel font-medium text-zinc-500"></input>
+                                <input onChange={(e)=>setEmail(e.target.value)} value={email} placeholder="Place your email" type="email" className="border-2 w-full p-2 border-black focus:outline-none text-sm font-cinzel font-medium text-zinc-500"></input>
                             </div>
                         </div>
                         <div className="pt-4"></div>
                         <div>
                             <h1 className="font-cinzel text-xl font-medium">PASSWORD</h1>
                             <div>
-                                <input placeholder="place your password" type="password" className="border-2 w-full p-2 border-black focus:outline-none text-sm font-cinzel font-medium text-zinc-500"></input>
+                                <input onChange={(e)=>setPassword(e.target.value)} value={password} placeholder="place your password" type="password" className="border-2 w-full p-2 border-black focus:outline-none text-sm font-cinzel font-medium text-zinc-500"></input>
                             </div>
                         </div>
                         <div className="pt-4"></div>
 
                         <div className="bg-[#d4c8b8] text-center hover:opacity-90 cursor-pointer">
-                            <button className="font-cinzel text-xl font-medium pt-2 font-medium hover:opacity-90 cursor-pointer">LOGIN</button>
+                            <button onClick={submitForm} className="font-cinzel text-xl font-medium pt-2 font-medium hover:opacity-90 cursor-pointer">LOGIN</button>
                         </div>
                         <div className="pt-2"></div>
                         <div>
