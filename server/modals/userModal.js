@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
+    tier:{
+        type:Number,
+        default:0,
+        min:0,
+        max:3
+    }
 })
 
 const userModal = mongoose.model("User",userSchema);

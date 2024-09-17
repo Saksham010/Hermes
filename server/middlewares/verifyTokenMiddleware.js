@@ -10,9 +10,10 @@ const authMiddleware = (req,res,next) =>{
 
         const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const email = data.email;
+        const tier = data.tier;
 
         // Save email in request
-        req.authMiddleware = {email};
+        req.authMiddleware = {email,tier};
         next();
     }catch(err){
         console.log("Error: ",err);
